@@ -1,4 +1,4 @@
-import React, { Suspense } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import { Canvas } from "@react-three/fiber";
 import {
   Decal,
@@ -18,10 +18,10 @@ const Ball = (props) => {
   return (
     <React.Fragment>
       {isMobile ? (
-        <mesh castShadow receiveShadow scale={2.75}>
+        <mesh castShadow receiveShadow scale={2.5}>
           <icosahedronGeometry args={[1, 0]} />
           <meshStandardMaterial
-            color="#8B4513" // Changed to brown
+            color="#8B4513" // Brown color for mobile
             polygonOffset
             polygonOffsetFactor={-5}
             flatShading
@@ -35,11 +35,11 @@ const Ball = (props) => {
           />
         </mesh>
       ) : (
-        <Float speed={1.75} rotationIntensity={1} floatIntensity={2}>
-          <mesh castShadow receiveShadow scale={2.75}>
+        <Float speed={1.5} rotationIntensity={1} floatIntensity={2}>
+          <mesh castShadow receiveShadow scale={3}>
             <icosahedronGeometry args={[1, 1]} />
             <meshStandardMaterial
-              color="#8B4513" // Changed to brown
+              color="#8B4513" // Brown color for PC
               polygonOffset
               polygonOffsetFactor={-5}
               flatShading
@@ -59,7 +59,15 @@ const Ball = (props) => {
 };
 
 const BallCanvas = ({ icon }) => {
-  const isMobile = window.innerWidth <= 768;
+  const [isMobile, setIsMobile] = useState(false);
+
+  // Dynamically detect screen size changes
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth <= 768);
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   return (
     <Canvas
@@ -71,7 +79,6 @@ const BallCanvas = ({ icon }) => {
         <OrbitControls enableZoom={false} enablePan={!isMobile} />
         <Ball imgUrl={icon} />
       </Suspense>
-
       <Preload all />
     </Canvas>
   );
