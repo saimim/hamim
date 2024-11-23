@@ -1,20 +1,45 @@
 import React, { Suspense, useEffect, useState } from "react";
 import { Canvas } from "@react-three/fiber";
-import { OrbitControls, Preload } from "@react-three/drei";
+import { OrbitControls, Preload, useGLTF } from "@react-three/drei";
 import CanvasLoader from "../Loader";
 
-const SimpleCube = ({ isMobile }) => {
+const Computers = ({ isMobile }) => {
+  const computer = useGLTF("./desktop_pc/scene.gltf");
+
+  if (isMobile) {
+    // If on mobile, return a static image of the computer or desk
+    return (
+      <div style={{ textAlign: "center" }}>
+        <img
+          src="/path/to/your/static_desk_image.png" // Ensure this image exists
+          alt="Static Desk"
+          style={{
+            width: "100%",
+            maxWidth: "500px", // Adjust the size for mobile
+            height: "auto",
+          }}
+        />
+      </div>
+    );
+  }
+
   return (
     <mesh>
-      <ambientLight intensity={isMobile ? 0.2 : 0.4} />
+      <hemisphereLight intensity={10} groundColor="brown" />
       <spotLight
-        position={[-10, 10, 5]}
-        angle={0.15}
+        position={[-20, 50, 10]}
+        angle={0.12}
+        penumbra={1}
         intensity={1}
-        castShadow
+        shadow-mapSize={1024}
       />
-      <boxGeometry args={[isMobile ? 1 : 1.5, isMobile ? 1 : 1.5, isMobile ? 1 : 1.5]} />
-      <meshStandardMaterial color="#915EFF" />
+      <pointLight intensity={1} />
+      <primitive
+        object={computer.scene}
+        scale={0.75}
+        position={[0, -3.25, -1.5]}
+        rotation={[-0.01, -0.2, -0.1]}
+      />
     </mesh>
   );
 };
@@ -23,23 +48,37 @@ const ComputersCanvas = () => {
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
-    const handleResize = () => setIsMobile(window.innerWidth <= 500);
-    handleResize();
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
+    const mediaQuery = window.matchMedia("(max-width: 500px)");
+
+    setIsMobile(mediaQuery.matches);
+
+    const handleMediaQueryChange = (event) => {
+      setIsMobile(event.matches);
+    };
+
+    mediaQuery.addEventListener("change", handleMediaQueryChange);
+
+    return () => {
+      mediaQuery.removeEventListener("change", handleMediaQueryChange);
+    };
   }, []);
+
+  // Don't render the canvas for mobile
+  if (isMobile) return null;
 
   return (
     <Canvas
       frameloop="demand"
       shadows
       dpr={[1, 2]}
-      camera={{ position: [5, 2, 5], fov: isMobile ? 40 : 50 }}
+      camera={{ position: [20, 3, 5], fov: 25 }}
+      gl={{ preserveDrawingBuffer: true }}
     >
       <Suspense fallback={<CanvasLoader />}>
         <OrbitControls enableZoom={false} maxPolarAngle={Math.PI / 2} minPolarAngle={Math.PI / 2} />
-        <SimpleCube isMobile={isMobile} />
+        <Computers isMobile={isMobile} />
       </Suspense>
+
       <Preload all />
     </Canvas>
   );
