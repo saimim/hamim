@@ -2,7 +2,6 @@ import React, { Suspense, useEffect, useState } from "react";
 import { Canvas } from "@react-three/fiber";
 import {
   Decal,
-  Float,
   OrbitControls,
   Preload,
   useTexture,
@@ -18,41 +17,41 @@ const Ball = (props) => {
   return (
     <React.Fragment>
       {isMobile ? (
+        // Render a static 2D-like ball for mobile
         <mesh castShadow receiveShadow scale={2.5}>
           <icosahedronGeometry args={[1, 0]} />
           <meshStandardMaterial
-            color="#8B4513" // Brown color for mobile
+            color="#722F37" // Red wine color
             polygonOffset
             polygonOffsetFactor={-5}
             flatShading
           />
           <Decal
             position={[0, 0, 1]}
-            rotation={[2 * Math.PI, 0, 6.25]}
+            rotation={[0, 0, 0]} // No rotation for mobile
             scale={1}
             map={decal}
             flatShading
           />
         </mesh>
       ) : (
-        <Float speed={1.5} rotationIntensity={1} floatIntensity={2}>
-          <mesh castShadow receiveShadow scale={3}>
-            <icosahedronGeometry args={[1, 1]} />
-            <meshStandardMaterial
-              color="#8B4513" // Brown color for PC
-              polygonOffset
-              polygonOffsetFactor={-5}
-              flatShading
-            />
-            <Decal
-              position={[0, 0, 1]}
-              rotation={[2 * Math.PI, 0, 6.25]}
-              scale={1}
-              map={decal}
-              flatShading
-            />
-          </mesh>
-        </Float>
+        // Render a fully interactive 3D ball for PC
+        <mesh castShadow receiveShadow scale={3}>
+          <icosahedronGeometry args={[1, 1]} />
+          <meshStandardMaterial
+            color="#722F37" // Red wine color
+            polygonOffset
+            polygonOffsetFactor={-5}
+            flatShading
+          />
+          <Decal
+            position={[0, 0, 1]}
+            rotation={[2 * Math.PI, 0, 6.25]} // Keep rotation for PC
+            scale={1}
+            map={decal}
+            flatShading
+          />
+        </mesh>
       )}
     </React.Fragment>
   );
@@ -74,9 +73,10 @@ const BallCanvas = ({ icon }) => {
       frameloop={isMobile ? "demand" : "always"}
       dpr={[1, 2]}
       gl={{ preserveDrawingBuffer: !isMobile }}
+      style={{ background: "transparent" }} // Set canvas background to transparent
     >
       <Suspense fallback={<CanvasLoader />}>
-        <OrbitControls enableZoom={false} enablePan={!isMobile} />
+        {!isMobile && <OrbitControls enableZoom={false} enablePan />}
         <Ball imgUrl={icon} />
       </Suspense>
       <Preload all />
