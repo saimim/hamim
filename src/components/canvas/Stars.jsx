@@ -30,6 +30,11 @@ const Stars = () => {
 };
 
 const StarsCanvas = () => {
+  // Check if it's mobile by comparing window width
+  const isMobile = window.innerWidth <= 768;
+
+  if (isMobile) return null; // If it's a mobile device, return nothing
+
   return (
     <div className="w-full h-auto absolute inset-0 z-[-1]">
       <Canvas camera={{ position: [0, 0, 1] }}>
