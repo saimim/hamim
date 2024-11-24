@@ -1,8 +1,31 @@
-# React + Vite
+Portfolio Website
+A dynamic portfolio website showcasing my projects, skills, and providing an intuitive way for others to connect with me. Built with React, Three.js, and Tailwind CSS.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+🚀 Demo
+[View Live Demo](https://saimim.github.io/hamim/)
 
-Currently, two official plugins are available:
+🧐 Features
+Here are some of the key features of this project:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Interactive 3D Experience: A visually engaging hero section with 3D elements built using Three.js.
+Projects Section: Highlights my portfolio projects with descriptions, images, and links to live demos or repositories.
+About Section: Showcases my skills, background, and experience.
+Contact Section: Features a contact form powered by EmailJS for visitors to send messages directly.
+Responsive Design: Optimized for seamless viewing on desktop and mobile devices.
+Stars Animation: Adds an aesthetic animated starry background on desktop. (Disabled for mobile users to ensure optimal performance.)
+
+💻 Built with
+Technologies and libraries used in the project:
+
+React.js: For building the website structure and user interface.
+Three.js: To create and manage interactive 3D elements.
+Tailwind CSS: For styling and responsive design.
+Framer Motion: For smooth animations and transitions.
+EmailJS: To handle form submissions and send emails directly.
+Vite.js: A fast build tool for an optimized development experience.
+🎨 Customization
+You can easily customize the website to match your personal branding:
+
+Update the content in the components folder for personalized information.
+Adjust colors and styling in the Tailwind CSS configuration file.
+Replace 3D models or animations with your own assets in the Three.js sections.
