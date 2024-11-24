@@ -23,9 +23,3 @@ Tailwind CSS: For styling and responsive design.
 Framer Motion: For smooth animations and transitions.
 EmailJS: To handle form submissions and send emails directly.
 Vite.js: A fast build tool for an optimized development experience.
-🎨 Customization
-You can easily customize the website to match your personal branding:
-
-Update the content in the components folder for personalized information.
-Adjust colors and styling in the Tailwind CSS configuration file.
-Replace 3D models or animations with your own assets in the Three.js sections.
