@@ -8,11 +8,19 @@ import { motion } from "framer-motion";
 import "react-vertical-timeline-component/style.min.css";
 
 import { styles } from "../styles";
-import { experiences } from "../constants";
+import { experiences } from "../constants"; // Using the experiences from constants
 import { SectionWrapper } from "../hoc";
 import { textVariant } from "../utils/motion";
 
+// Modify the ExperienceCard component to handle clicks and navigate to the link
 const ExperienceCard = ({ experience }) => {
+  // Handle click to open the link for the experience
+  const handleCardClick = () => {
+    if (experience.link) {
+      window.open(experience.link, "_blank"); // Open the link in a new tab
+    }
+  };
+
   return (
     <VerticalTimelineElement
       contentStyle={{
@@ -23,7 +31,10 @@ const ExperienceCard = ({ experience }) => {
       date={experience.date}
       iconStyle={{ background: experience.iconBg }}
       icon={
-        <div className='flex justify-center items-center w-full h-full'>
+        <div
+          className='flex justify-center items-center w-full h-full cursor-pointer'
+          onClick={handleCardClick} // Add the onClick to the icon
+        >
           <img
             src={experience.icon}
             alt={experience.company_name}

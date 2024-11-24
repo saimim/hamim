@@ -42,9 +42,10 @@ const Navbar = () => {
             window.scrollTo(0, 0);
           }}
         >
-          <img src={logo} alt='logo' className='w-9 h-9 object-contain' />
-          <p className='text-white text-[18px] font-bold cursor-pointer flex '>
-           Saimim &nbsp;
+          {/* Updated logo size to make it 3x bigger */}
+          <img src={logo} alt='logo' className='w-24 h-24 object-contain' /> {/* Increased logo size */}
+          <p className='text-white text-[18px] font-bold cursor-pointer flex'>
+            Saimim &nbsp;
             <span className='sm:block hidden'> | AI Enthusiast</span>
           </p>
         </Link>
